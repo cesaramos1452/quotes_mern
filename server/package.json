@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "module": "main.js",
+  "scripts": {
+    "start": "nodemon -r esm main.js"
+  },
+  "keywords": [
+    "FullStack",
+    "App"
+  ],
+  "author": "Cesar Ramos",
+  "license": "MIT",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
+}
