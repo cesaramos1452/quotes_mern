@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import inspire from './assets/img/liveToInspre.png';
-
+import Form from './components/form/Form';
+import Quotes from './components/quotes/Quotes';
+import useStyles from './styles';
+import { useDispatch } from 'react-redux';
+import { getPosts } from './redux/actions/action-creators';
 function App() {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
   return (
     <Container maxWidth='lg'>
-      <AppBar position='static' color='inherit'>
-        <Typography variant='h2' align='center'>
-          Quotes
+      <AppBar className={classes.appBar} position='static' color='inherit'>
+        <img className={classes.image} src={inspire} alt='inspire' width='80' />
+        <Typography className={classes.heading} variant='h2' align='center'>
+          Live To Inspire
         </Typography>
-        <img src={inspire} alt='inspire' height='60' />
       </AppBar>
       <Grow in>
         <Container>
@@ -19,9 +29,11 @@ function App() {
             alignItems='stretch'
             spacing={3}>
             <Grid item xs={12} item sm={7}>
-              
+              <Quotes />
             </Grid>
-            <Grid item xs={12} item sm={4}></Grid>
+            <Grid item xs={12} item sm={4}>
+              <Form />
+            </Grid>
           </Grid>
         </Container>
       </Grow>

@@ -6,6 +6,7 @@ const moodSchema = new Schema({
   date: { type: Date, default: new Date() },
   author: String,
   creator: String,
+  selectedFile: String,
 });
 
 export default mongoose.model('Quotes', moodSchema);
