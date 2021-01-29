@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
+import {
+  Container,
+  AppBar,
+  Typography,
+  Grow,
+  Grid,
+  Button,
+  Box,
+} from '@material-ui/core';
 import inspire from './assets/img/liveToInspre.png';
 import Form from './components/form/Form';
 import Quotes from './components/quotes/Quotes';
@@ -7,6 +15,7 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { getPosts } from './redux/actions/action-creators';
 function App() {
+  const [create, setCreate] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -33,7 +42,17 @@ function App() {
               <Quotes setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} item sm={4}>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
+              {create ? (
+                <Form currentId={currentId} setCurrentId={setCurrentId} />
+              ) : null}
+              <Box mt={5} ml={15}>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={() => setCreate(!create)}>
+                  {create ? 'HIDE' : 'CREATE A QUOTE'}
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Container>
