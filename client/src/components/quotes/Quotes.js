@@ -4,7 +4,7 @@ import { Grid, CircularProgress } from '@material-ui/core';
 import useStyles from './styles';
 import Quote from '../quote/Quote';
 
-const Quotes = () => {
+const Quotes = ({ setCurrentId }) => {
   const classes = useStyles();
   const quotes = useSelector((state) => state.quotes);
   return !quotes.length ? (
@@ -17,7 +17,7 @@ const Quotes = () => {
       spacing={3}>
       {quotes.map((quote) => (
         <Grid item key={quote._id} xs={12} sm={6}>
-          <Quote quote={quote} />
+          <Quote quote={quote} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>

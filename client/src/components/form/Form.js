@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Typography, Button, Paper } from '@material-ui/core';
 import useStyles from './styles.js';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../redux/actions/action-creators';
-function Form() {
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, updatePost } from '../../redux/actions/action-creators';
+function Form({ currentId, setCurrentId }) {
   const dispatch = useDispatch();
+  const quote = useSelector((state) =>
+    currentId ? state.quotes.find((p) => p._id === currentId) : null
+  );
 
   const [postData, setPostData] = useState({
     quote: '',
@@ -14,15 +17,32 @@ function Form() {
     selectedFile: '',
   });
 
+  useEffect(() => {
+    if (quote) {
+      setPostData(quote);
+    }
+  }, [quote]);
+
   const classes = useStyles();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+    clear();
   };
 
   const clear = () => {
-    setPostData({ quote: '', author: '', creator: '', selectedFile: '' });
+    setCurrentId(null)
+    setPostData({
+      quote: '',
+      author: '',
+      creator: '',
+      selectedFile: '',
+    });
   };
 
   return (
@@ -37,9 +57,8 @@ function Form() {
         <TextField
           name='creator'
           variant='outlined'
-          label='Creator'
+          label='Name'
           fullWidth
-          value
           value={postData.creator}
           onChange={(event) =>
             setPostData({ ...postData, creator: event.target.value })
@@ -51,7 +70,6 @@ function Form() {
           variant='outlined'
           label='Quote'
           fullWidth
-          value
           value={postData.quote}
           onChange={(event) =>
             setPostData({ ...postData, quote: event.target.value })
@@ -63,7 +81,6 @@ function Form() {
           variant='outlined'
           label='Author'
           fullWidth
-          value
           value={postData.author}
           onChange={(event) =>
             setPostData({ ...postData, author: event.target.value })
@@ -86,8 +103,7 @@ function Form() {
           color='primary'
           size='large'
           type='submit'
-          fullWidth
-          value>
+          fullWidth>
           Submit
         </Button>
 
@@ -97,8 +113,7 @@ function Form() {
           color='secondary'
           size='small'
           type='submit'
-          fullWidth
-          value>
+          fullWidth>
           Clear
         </Button>
       </form>

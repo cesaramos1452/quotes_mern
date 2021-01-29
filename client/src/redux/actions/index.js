@@ -1,2 +1,4 @@
 export const FETCH_QUOTES = 'FETCH_QUOTES';
 export const CREATE_QUOTE = 'CREATE_QUOTE';
+export const UPDATE_QUOTE = 'UPDATE_QUOTE';
+export const DELETE_QUOTE = 'DELETE_QUOTE'

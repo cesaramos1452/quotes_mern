@@ -11,9 +11,12 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../../redux/actions/action-creators';
 
-function Quote({ quote }) {
+function Quote({ quote, setCurrentId }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -26,7 +29,10 @@ function Quote({ quote }) {
         <Typography variant='body2'>{moment(quote.date).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size='small' onClick={() => {}}>
+        <Button
+          style={{ color: 'white' }}
+          size='small'
+          onClick={() => setCurrentId(quote._id)}>
           <MoreHorizIcon fontSize='default' />
         </Button>
       </div>
@@ -34,9 +40,15 @@ function Quote({ quote }) {
         <Typography className={classes.title} variant='h5' gutterBottom>
           {quote.quote}
         </Typography>
+        <Typography className={classes.title} variant='h5' gutterBottom>
+          {quote.author}
+        </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button
+          size='small'
+          color='primary'
+          onClick={() => dispatch(deletePost(quote._id))}>
           <DeleteIcon fontSize='small' />
           Delete
         </Button>

@@ -13,12 +13,11 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now()
-        
-  }
+  },
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 export default mongoose.model('User', UserSchema);

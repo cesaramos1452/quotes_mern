@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import inspire from './assets/img/liveToInspre.png';
 import Form from './components/form/Form';
@@ -7,11 +7,12 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { getPosts } from './redux/actions/action-creators';
 function App() {
+  const [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [dispatch, currentId]);
 
   return (
     <Container maxWidth='lg'>
@@ -29,10 +30,10 @@ function App() {
             alignItems='stretch'
             spacing={3}>
             <Grid item xs={12} item sm={7}>
-              <Quotes />
+              <Quotes setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} item sm={4}>
-              <Form />
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
